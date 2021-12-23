@@ -75,8 +75,6 @@ public class Challenges {
             System.out.println("\n\nDive! - Part 1");
 
             FileInputStream file = new FileInputStream("puzzle_inputs/dive/puzzle_input.txt");
-            // FileInputStream file = new
-            // FileInputStream("puzzle_inputs/dive/example_input.txt");
             DataInputStream data = new DataInputStream(file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(data));
 
@@ -119,6 +117,27 @@ public class Challenges {
 
             System.out.println("\nThe horizontal position is: " + horizontalPos + "\nThe depth is: " + depth
                     + "\nThe multiplication of the horizontal position and the depth is: " + (horizontalPos * depth));
+
+            System.out.println("\n\nDive! - Part 2");
+
+            int aim = 0;
+            depth = 0;
+            horizontalPos = 0;
+
+            for (int i = 0; i < commands.size(); i++) {
+                if (commands.get(i).equals("forward")) {
+                    horizontalPos += numbers.get(i);
+                    depth += numbers.get(i) * aim;
+                } else if (commands.get(i).equals("down")) {
+                    aim += numbers.get(i);
+                } else if (commands.get(i).equals("up")) {
+                    aim -= numbers.get(i);
+                }
+            }
+
+            System.out.println("\nThe new horizontal position is: " + horizontalPos + "\nThe new depth is: " + depth
+                    + "\nThe new multiplication of the horizontal position and the depth is: "
+                    + (horizontalPos * depth));
 
             reader.close();
         } catch (Exception error) {
