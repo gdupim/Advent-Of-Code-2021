@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Challenges {
-    // Day One - Sonar Sweep:
+    // Day One:
     public void SonarSweep() {
         try {
             System.out.println("\n\nSonar Sweep - Part 1");
@@ -69,12 +69,56 @@ public class Challenges {
         }
     }
 
-    // Day two:
+    // Day Two:
     public void Dive() {
         try {
+            System.out.println("\n\nDive! - Part 1");
+
             FileInputStream file = new FileInputStream("puzzle_inputs/dive/puzzle_input.txt");
+            // FileInputStream file = new
+            // FileInputStream("puzzle_inputs/dive/example_input.txt");
             DataInputStream data = new DataInputStream(file);
             BufferedReader reader = new BufferedReader(new InputStreamReader(data));
+
+            String line;
+
+            ArrayList<String> lines = new ArrayList<String>();
+            ArrayList<String> commands = new ArrayList<String>();
+            ArrayList<Integer> numbers = new ArrayList<Integer>();
+
+            // Adds the lines of the file to an array
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            // Split each string in the "lines" array into two arrays: the number arrays and
+            // the commands arrays
+            for (int i = 0; i < lines.size(); i++) {
+                String[] string = lines.get(i).split(" ");
+
+                for (int j = 0; j < string.length; j++) {
+                    if (string[j].matches("[0-9]")) {
+                        numbers.add(Integer.parseInt(string[j]));
+                    } else {
+                        commands.add(string[j]);
+                    }
+                }
+            }
+
+            int horizontalPos = 0, depth = 0;
+
+            for (int i = 0; i < commands.size(); i++) {
+                if (commands.get(i).equals("forward")) {
+                    horizontalPos += numbers.get(i);
+                } else if (commands.get(i).equals("down")) {
+                    depth += numbers.get(i);
+                } else if (commands.get(i).equals("up")) {
+                    depth -= numbers.get(i);
+                }
+            }
+
+            System.out.println("\nThe horizontal position is: " + horizontalPos + "\nThe depth is: " + depth
+                    + "\nThe multiplication of the horizontal position and the depth is: " + (horizontalPos * depth));
 
             reader.close();
         } catch (Exception error) {
