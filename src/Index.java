@@ -15,6 +15,7 @@ public class Index {
                         + "\n[0] - Exit"
                         + "\n[1] - Sonar Sweep"
                         + "\n[2] - Dive!"
+                        + "\n[3] - Binary Diagnostic"
                         + "\n\nType here your choice: ");
                 int option = scan.nextInt();
 
@@ -32,6 +33,11 @@ public class Index {
                     case 2:
                         clearScreen();
                         challenges.Dive();
+                        break;
+
+                    case 3:
+                        clearScreen();
+                        challenges.BinaryDiagnostic();
                         break;
 
                     default:

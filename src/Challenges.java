@@ -144,4 +144,97 @@ public class Challenges {
             System.out.println("\n\nError: " + error);
         }
     }
+
+    // Part three:
+    public void BinaryDiagnostic() {
+        try {
+            System.out.println("\n\nBinary Diagnostic - Part 1");
+
+            FileInputStream file = new FileInputStream("puzzle_inputs/binaryDiagnostic/puzzle_input.txt");
+            DataInputStream data = new DataInputStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(data));
+
+            String line;
+
+            ArrayList<String> lines = new ArrayList<String>();
+
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            String gammaRate = "", epsilonRate = "";
+
+            // This array will store the numbers as chars to be analyzed later
+            ArrayList<Character> chars = new ArrayList<Character>();
+
+            // These two will be used as counters of zeroes and ones
+            ArrayList<Integer> ones = new ArrayList<Integer>();
+            ArrayList<Integer> zeroes = new ArrayList<Integer>();
+
+            // This loop will check each line of the "lines" array
+            for (int i = 0; i < lines.size(); i++) {
+                // Transforms the strings of the "lines" array into chars
+                for (char c : lines.get(i).toCharArray()) {
+                    chars.add(c);
+                }
+
+                // Dynamically sizes the arrays of ones and zeroes
+                while (ones.size() < chars.size() && zeroes.size() < chars.size()) {
+                    ones.add(0);
+                    zeroes.add(0);
+                }
+
+                // Counts the ones and zeroes of each position in the "chars" array
+                for (int j = 0; j < chars.size(); j++) {
+                    if (chars.get(j) == '1') {
+                        ones.set(j, ones.get(j) + 1);
+                    } else {
+                        zeroes.set(j, zeroes.get(j) + 1);
+                    }
+                }
+
+                // Clears the array to be used again
+                chars.clear();
+            }
+
+            // Checks each position of both arrays and see if or zero or one is the most
+            // or least frequent
+            for (int i = 0; i < ones.size(); i++) {
+                if (ones.get(i) > zeroes.get(i)) {
+                    gammaRate += "1";
+                    epsilonRate += "0";
+                } else {
+                    gammaRate += "0";
+                    epsilonRate += "1";
+                }
+            }
+
+            long gammaRateDecimal = BinaryToDecimal(Long.parseLong(gammaRate));
+            long epsilonRateDecimal = BinaryToDecimal(Long.parseLong(epsilonRate));
+
+            System.out.println("\nThe gamma rate (binary) is: " + gammaRate
+                    + "\nThe epsilon rate (binary) is: " + epsilonRate
+                    + "\nThe gamma rate (decimal) is: " + gammaRateDecimal
+                    + "\nThe epsilon rate (decimal) is: " + epsilonRateDecimal
+                    + "\nThe multiplication (in decimal) of the gamma rate and the epsilon rate is: "
+                    + gammaRateDecimal * epsilonRateDecimal);
+
+            reader.close();
+        } catch (
+
+        Exception error) {
+            System.out.println("\n\nError: " + error);
+        }
+    }
+
+    public int BinaryToDecimal(long binary) {
+        int decimal = 0;
+        char[] binaryArray = Long.toString(binary).toCharArray();
+
+        for (int i = 0, power = (binaryArray.length - 1); i < binaryArray.length; i++, power--) {
+            decimal += (Character.getNumericValue(binaryArray[i]) * Math.pow(2, power));
+        }
+
+        return decimal;
+    }
 }
